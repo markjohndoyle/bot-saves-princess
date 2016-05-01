@@ -34,11 +34,25 @@ public class BotSearch
 
     private static void displayPathtoPrincess(int gridSize, String[] grid, int princessIndex)
     {
-        int moveCount = (gridSize / 2) - (1 / 2);
-        moveToCorner(moveCount, findCorner(princessIndex, gridSize));
+        printMovesToCorner(calculateMoveCount(gridSize), findCorner(princessIndex, gridSize));
     }
 
-    private static void moveToCorner(int moveCount, Corner corner)
+    /**
+     * Calculates the number of moves required to get to the corner using the following formula:
+     * 
+     * \frac{n}{2}-\frac{1}{2}
+     * 
+     * where n = the grid width or height.
+     *  
+     * @param gridSize
+     * @return
+     */
+    private static int calculateMoveCount(int gridSize)
+    {
+        return (gridSize / 2) - (1 / 2);
+    }
+
+    private static void printMovesToCorner(int moveCount, Corner corner)
     {
         String horizontalDirection = corner.horizontalDirection();
         String verticalDirection = corner.verticalDirection();
