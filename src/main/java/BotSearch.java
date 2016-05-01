@@ -29,6 +29,9 @@ import java.util.Scanner;
  */
 public class BotSearch
 {
+    private static final String PRINCESS_IDENTIFIER = "p";
+
+
     private static void displayPathtoPrincess(int gridSize, String[] grid, int princessIndex)
     {
         int moveCount = (gridSize / 2) - (1 / 2);
@@ -55,26 +58,45 @@ public class BotSearch
      BOTTOM_LEFT,
      BOTTOM_RIGHT;
 
+        private static final String DOWN_IDENTIFIER = "DOWN";
+        private static final String UP_IDENTIFIER = "UP";
+        private static final String RIGHT_IDENTIFIER = "RIGHT";
+        private static final String LEFT_IDENTIFIER = "LEFT";
+
+
+        /**
+         * @return the horizontal direction from centre to this corner.
+         */
         public String horizontalDirection()
         {
             if ((this == TOP_LEFT) || (this == BOTTOM_LEFT))
             {
-                return "LEFT";
+                return LEFT_IDENTIFIER;
             }
-            return "RIGHT";
+            return RIGHT_IDENTIFIER;
         }
 
+        /**
+         * @return @return the vertical direction from centre to this corner.
+         */
         public String verticalDirection()
         {
             if ((this == TOP_LEFT) || (this == Corner.TOP_RIGHT))
             {
-                return "UP";
+                return UP_IDENTIFIER;
             }
-            return "DOWN";
+            return DOWN_IDENTIFIER;
         }
     }
 
 
+    /**
+     * Finds which corner this index corresponds to assuming a flattened grid array.
+     * 
+     * @param index
+     * @param gridSize
+     * @return
+     */
     private static Corner findCorner(int index, int gridSize)
     {
         Corner result;
@@ -96,14 +118,15 @@ public class BotSearch
         }
         else
         {
-            throw new IllegalStateException("Not a corner index!");
+            throw new IllegalStateException("Not a corner index! The princess mus tbe in a corner so the game " +
+                            "state is invalid.");
         }
         return result;
     }
 
     private static boolean isPrincess(String gridElem)
     {
-        if (gridElem.equals("p"))
+        if (gridElem.equals(PRINCESS_IDENTIFIER))
         {
             return true;
         }
